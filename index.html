@@ -12,7 +12,7 @@
 		<!-- * After typing in skill, dynamically generate a list item and two buttons (add/subtract) -->
 		<!-- * Store the points in database and display on screen -->
 		<!-- ! Dynamically order the list items based on which ever ones has the most points -->
-		<form action="" class="add-skill">
+		<form action="" class="skillForm">
 			<label for="skill">Skill</label>
 			<input
 				type="text"
@@ -22,7 +22,23 @@
 			/>
 			<input type="submit" value="Send" />
 		</form>
-		<ul class="skill-list"></ul>
+		<ul class="skillList"></ul>
+
+		<script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
+		<script>
+			var firebaseConfig = {
+				apiKey: 'AIzaSyBfL3z6E1q5vUB4P6Gi4kg3GPQRZNNDct4',
+				authDomain: 'keyword-tracker-9f5b5.firebaseapp.com',
+				databaseURL: 'https://keyword-tracker-9f5b5.firebaseio.com',
+				projectId: 'keyword-tracker-9f5b5',
+				storageBucket: 'keyword-tracker-9f5b5.appspot.com',
+				messagingSenderId: '967816563206',
+				appId: '1:967816563206:web:08d79e8c4de2237e5e9187'
+			};
+			firebase.initializeApp(firebaseConfig);
+		</script>
+
+		<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
 
 		<script type="text/javascript" src="/scripts/script.js"></script>
 	</body>
