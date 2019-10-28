@@ -8,15 +8,24 @@
 		<link rel="stylesheet" href="/styles/style.css" />
 	</head>
 	<body>
+		<header class="main-header">
+			<h1>keyword<span>Tracker</span></h1>
+			<p>
+				A simple word tracker developed using vanillaJS and Firebase
+			</p>
+		</header>
+
 		<form action="" class="entireForm">
-			<label for="skill">Skill</label>
-			<input
-				type="text"
-				placeholder="type in a skill"
-				name="skill"
-				id="skill"
-			/>
-			<input type="submit" value="Send" />
+			<div class="app-insert">
+				<label for="skill" aria-hidden="true">Skill</label>
+				<input
+					type="text"
+					placeholder="type in a skill"
+					name="skill"
+					id="skill"
+				/>
+				<input type="submit" id="submit" value="Send" />
+			</div>
 		</form>
 		<ul class="listOfSkills"></ul>
 
