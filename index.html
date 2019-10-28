@@ -8,11 +8,7 @@
 		<link rel="stylesheet" href="/styles/style.css" />
 	</head>
 	<body>
-		<!-- * Input box to type in a skill -->
-		<!-- * After typing in skill, dynamically generate a list item and two buttons (add/subtract) -->
-		<!-- * Store the points in database and display on screen -->
-		<!-- ! Dynamically order the list items based on which ever ones has the most points -->
-		<form action="" class="skillForm">
+		<form action="" class="entireForm">
 			<label for="skill">Skill</label>
 			<input
 				type="text"
@@ -22,7 +18,7 @@
 			/>
 			<input type="submit" value="Send" />
 		</form>
-		<ul class="skillList"></ul>
+		<ul class="listOfSkills"></ul>
 
 		<script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
 		<script>
