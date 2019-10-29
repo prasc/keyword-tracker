@@ -4,8 +4,8 @@
 
 // 1) 	GENERAL STYLES
 // 2) 	HEADER
-// 3) 	NAV BAR
-// 4)	MAIN IMAGE SECTION
+// 3) 	INPUT
+// 4)	LIST STYLES
 
 @import './partials/setup';
 
@@ -42,7 +42,7 @@ header p {
 	color: #21333fda;
 }
 
-// INSERT
+// INPUT
 
 .app-insert {
 	width: 100%;
@@ -71,4 +71,28 @@ header p {
 
 .app-insert label {
 	visibility: hidden;
+}
+
+// LIST STYLES
+
+.listOfSkills {
+	list-style-type: none;
+	margin: 0 auto;
+	div {
+		display: flex;
+	}
+}
+
+.plus,
+.minus {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+	.fas {
+		font-size: 5rem;
+	}
 }

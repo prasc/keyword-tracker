@@ -31,17 +31,23 @@ function addItemToList(e) {
 // function to render latest list item onto screen
 updateListFromFirebase = (response) => {
 	const firebaseArray = Object.values(response.val());
-	const newItem = firebaseArray[firebaseArray.length - 1];
-	console.log(newItem);
+	const sortedArray = firebaseArray.sort((a, b) =>
+		a.count < b.count ? 1 : -1
+	);
 
-	listOfSkills.innerHTML += `
+	console.log(sortedArray);
+	listOfSkills.innerHTML = '';
+
+	sortedArray.map((item) => {
+		listOfSkills.innerHTML += `
 	<div>
-		<li class="skillName">${newItem.skill}</li>
-		<p class="currentScore">${newItem.count}</p>
+		<li class="skillName">${item.skill}</li>
+		<p class="currentScore">${item.count}</p>
 		<button class="plus">+</button>
 		<button class="minus">-</button>
 	</div>
 	`;
+	});
 };
 
 // function to send new item to firebase
@@ -57,9 +63,11 @@ sendToFirebase = (event, skill) => {
 function updateUIOnPageLoad() {
 	dbRef.once('value', (response) => {
 		const firebaseArray = Object.values(response.val());
-
-		if (firebaseArray.length != 0) {
-			firebaseArray.map((item) => {
+		const sortedArray = firebaseArray.sort((a, b) =>
+			a.count < b.count ? 1 : -1
+		);
+		if (sortedArray.length != 0) {
+			sortedArray.map((item) => {
 				listOfSkills.innerHTML += `
 					<div>
 						<li class="skillName">${item.skill}</li>
