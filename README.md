@@ -1,6 +1,3 @@
-# keyword-tracker
-An application I created using vanilla JS and firebase to record the most commonly occuring words across job descriptions for jobs I was interested in.
-
 # KEYWORD TRACKER
 
 This is an application I created using vanilla JS and firebase to record the most commonly occuring words across job descriptions for jobs I was interested in.
