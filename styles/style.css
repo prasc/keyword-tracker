@@ -280,27 +280,52 @@ header p {
 .listOfSkills {
   list-style-type: none;
   margin: 0 auto;
+  color: #6e7070;
 }
 
 .listOfSkills div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
-.plus,
-.minus {
+.listOfSkills div li {
+  width: 10%;
+  font-size: 2rem;
+}
+
+.listOfSkills div p {
+  text-align: center;
+  width: 10%;
+  font-size: 4rem;
+}
+
+.listOfSkills div button {
+  width: 10%;
   background: none;
   color: inherit;
   border: none;
   padding: 0;
-  font: inherit;
+  font-size: 3rem;
   cursor: pointer;
   outline: inherit;
 }
 
-.plus .fas,
-.minus .fas {
-  font-size: 5rem;
+footer {
+  width: 100%;
+  margin: 5% auto 0 auto;
+  text-align: center;
+  border-bottom: 5px solid #95a5a6;
+}
+
+footer a {
+  text-decoration: none;
+  color: #7f8c8d;
 }
 /*# sourceMappingURL=style.css.map */

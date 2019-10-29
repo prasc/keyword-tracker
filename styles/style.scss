@@ -78,21 +78,42 @@ header p {
 .listOfSkills {
 	list-style-type: none;
 	margin: 0 auto;
+	color: #6e7070;
 	div {
 		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		li {
+			width: 10%;
+			font-size: 2rem;
+		}
+		p {
+			text-align: center;
+			width: 10%;
+			font-size: 4rem;
+		}
+		button {
+			width: 10%;
+			background: none;
+			color: inherit;
+			border: none;
+			padding: 0;
+			font-size: 3rem;
+			cursor: pointer;
+			outline: inherit;
+		}
 	}
 }
 
-.plus,
-.minus {
-	background: none;
-	color: inherit;
-	border: none;
-	padding: 0;
-	font: inherit;
-	cursor: pointer;
-	outline: inherit;
-	.fas {
-		font-size: 5rem;
+// FOOTER STYLES
+
+footer {
+	width: 100%;
+	margin: 5% auto 0 auto;
+	text-align: center;
+	border-bottom: 5px solid #95a5a6;
+	a {
+		text-decoration: none;
+		color: #7f8c8d;
 	}
 }
