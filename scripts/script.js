@@ -47,7 +47,7 @@ updateListFromFirebase = dbRef.on('value', (response) => {
 // function to send new item to firebase
 sendToFirebase = (event, skill) => {
 	event.preventDefault();
-	const newSkill = { skill: skill, count: count };
+	const newSkill = { skill, count };
 	dbRef.update({
 		[skill]: newSkill
 	});
