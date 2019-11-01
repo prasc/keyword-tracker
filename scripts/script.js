@@ -106,7 +106,6 @@ const arrayOfKeyword = [
 	'OpenID',
 	'Apache',
 	'Nginx',
-	'C',
 	'C++',
 	'C#',
 	'I/O Management',
@@ -153,6 +152,7 @@ const textAreaUserInput = document.querySelector('#skill');
 // assigning global variables
 let count = 1; // change to inital count
 const arrayOfSkills = [];
+let matchWordsArray = [];
 
 // function to render newly typed skill and call sendToFirebase function
 function addItemToList(e) {
@@ -244,38 +244,140 @@ function decreaseCount(e) {
 }
 
 function findMatches(wordToMatch, arrayOfKeyword) {
-	// console.log('word2match is: ', wordToMatch);
 	return arrayOfKeyword.filter((word) => {
-		// here we need to figure out if the city or state matches what was searched
+		const regex = new RegExp(wordToMatch, 'gi');
+		return word.match(regex);
 	});
 }
 
 highlightMatchingWords = (e) => {
-	// const userText = e.target.value;
-	const arrOfUserInput = e.target.value.split(' ');
-	// console.log('arrOfUserInput is: ', arrOfUserInput);
-	const matchWordsArray = findMatches(arrOfUserInput, arrayOfKeyword);
-	console.log('matchWordsArray is: ', matchWordsArray);
-	const html = matchWordsArray
-		.map((matchingWord) => {
-			const regex = new RegExp(textAreaUserInput.value, 'gi');
-			const highlightedText = matchingWord.replace(
-				regex,
-				`"${this.value}"`
-			);
-			return `
-	 		${highlightedText}
-		`;
-		})
-		.join('');
-	// console.log(html);
-	// textAreaUserInput.value = html;
+	const userInput = e.target.value;
+	return (matchWordsArray = findMatches(userInput, arrayOfKeyword));
 };
 
-// Event listeners which will highlight the matching keywords from textarea
+$('.array-example').highlightWithinTextarea({
+	highlight: [
+		'Git',
+		'Terminal',
+		'Data Structures',
+		'Algorithms',
+		'Github',
+		'Version Control',
+		'SSH',
+		'HTTP',
+		'HTTPS',
+		'API',
+		'SEO',
+		'Accessibility',
+		'HTML',
+		'CSS',
+		'Javascript',
+		'Responsive',
+		'CSS3',
+		'HTML5',
+		'ES6',
+		'XHR',
+		'SASS',
+		'npm',
+		'Boostrap',
+		'BEM',
+		'gulp',
+		'Redux',
+		'Prettier',
+		'ESLint',
+		'Webpack',
+		'React',
+		'Angular',
+		'Vue.js',
+		'Vuex',
+		'RxJS',
+		'ngrx',
+		'Styled Components',
+		'CSS Modules',
+		'Jest',
+		'Enzyme',
+		'Mocha',
+		'Chai',
+		'Karma',
+		'Jasmine',
+		'Ava',
+		'Protractor',
+		'Storage',
+		'Web Sockets',
+		'Service Workeres',
+		'Location',
+		'DevTools',
+		'Flow',
+		'TypeScript',
+		'React.js',
+		'Next.js',
+		'After.js',
+		'Nuxt.js',
+		'Gatsby',
+		'Electron',
+		'React Native',
+		'NativeScript',
+		'Web Assembly',
+		'Java',
+		'.NET',
+		'Haskell',
+		'Clojure',
+		'Erlang',
+		'Python',
+		'Ruby',
+		'PHP',
+		'Node.js',
+		'Go',
+		'Rust',
+		'Package Manager',
+		'Oracle',
+		'MySQL',
+		'MariaDB',
+		'PostgreSQL',
+		'MSSQL',
+		'MongoDB',
+		'Cassandra',
+		'Memcached',
+		'Redis',
+		'OAuth',
+		'Basic Authentification',
+		'Token Authentification',
+		'JWT',
+		'OpenID',
+		'Apache',
+		'Nginx',
+		'C++',
+		'C#',
+		'I/O Management',
+		'Memory',
+		'Storage',
+		'File Systems',
+		'Linux',
+		'Unix',
+		'Windows',
+		'DNS',
+		'FTP',
+		'SSL',
+		'Tomcat',
+		'Caddy',
+		'VIM',
+		'Nano',
+		'Emacs',
+		'Docker',
+		'Kubernates',
+		'Terraform',
+		'Cloud',
+		'Jenkins',
+		'AWS',
+		'Google Cloud',
+		'Azure',
+		'Heroku',
+		'Cloud Providors'
+	]
+});
+
 textAreaUserInput.addEventListener('change', highlightMatchingWords);
 textAreaUserInput.addEventListener('keyup', highlightMatchingWords);
-
 window.addEventListener('load', updateListFromFirebase);
 entireForm.addEventListener('submit', addItemToList);
 listOfSkills.addEventListener('click', increaseCount);
