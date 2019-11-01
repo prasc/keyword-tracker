@@ -132,16 +132,13 @@ const arrayOfKeyword = [
 	'Google Cloud',
 	'Azure',
 	'Heroku',
-	'Cloud Providors'
+	'Cloud Providors',
+	'jQuery',
+	'UI',
+	'UX',
+	'Babel',
+	'Webpack'
 ];
-
-function findMatches(wordToMatch, cities) {
-	return cities.filter((place) => {
-		// here we need to figure out if the city or state matches what was searched
-		const regex = new RegExp(wordToMatch, 'gi');
-		return place.city.match(regex) || place.state.match(regex);
-	});
-}
 
 // selecting dom elements for manipulation
 const dbRef = firebase.database().ref();
@@ -157,19 +154,32 @@ let matchWordsArray = [];
 // function to render newly typed skill and call sendToFirebase function
 function addItemToList(e) {
 	e.preventDefault();
-	const skill = this.querySelector('#skill').value;
+	matchWordsArray.map((matchedWord) => {
+		const skill = matchedWord;
 
-	if (!skill || skill.length > 30) {
-		alert('Type something less than 30 characters but longer than 0');
+		if (!skill) {
+			alert('Type something');
+			entireForm.reset();
+			this.querySelector('#skill').focus();
+			return;
+		}
+
+		arrayOfSkills.push(skill);
+		sendToFirebase(e, skill);
 		entireForm.reset();
-		this.querySelector('#skill').focus();
-		return;
-	}
+	});
 
-	arrayOfSkills.push(skill);
-	sendToFirebase(e, skill);
-	entireForm.reset();
+	// const skill = this.querySelector('#skill').value;
 }
+
+// function to send new item to firebase
+sendToFirebase = (event, skill) => {
+	event.preventDefault();
+	const newSkill = { skill, count };
+	dbRef.update({
+		[skill]: newSkill
+	});
+};
 
 // function to listen to changes in firebase database and render UI on change
 updateListFromFirebase = dbRef.on('value', (response) => {
@@ -192,15 +202,6 @@ updateListFromFirebase = dbRef.on('value', (response) => {
 	});
 	console.log('just updated UI');
 });
-
-// function to send new item to firebase
-sendToFirebase = (event, skill) => {
-	event.preventDefault();
-	const newSkill = { skill, count };
-	dbRef.update({
-		[skill]: newSkill
-	});
-};
 
 // function to increase counter by one on button click and update firebase
 function increaseCount(e) {
@@ -244,15 +245,23 @@ function decreaseCount(e) {
 }
 
 function findMatches(wordToMatch, arrayOfKeyword) {
-	return arrayOfKeyword.filter((word) => {
-		const regex = new RegExp(wordToMatch, 'gi');
-		return word.match(regex);
+	let currentWordFromUserInput = wordToMatch.split(' ');
+	let arrayOfMatchedWords = [];
+	arrayOfKeyword.filter((word) => {
+		currentWordFromUserInput.map((item) => {
+			if (word.includes(item) && item != '') {
+				arrayOfMatchedWords.push(word);
+			}
+		});
 	});
+	return arrayOfMatchedWords;
 }
 
 highlightMatchingWords = (e) => {
 	const userInput = e.target.value;
-	return (matchWordsArray = findMatches(userInput, arrayOfKeyword));
+	let matchingWords = findMatches(userInput, arrayOfKeyword);
+
+	matchWordsArray = [...matchingWords];
 };
 
 $('.array-example').highlightWithinTextarea({
@@ -372,7 +381,12 @@ $('.array-example').highlightWithinTextarea({
 		'Google Cloud',
 		'Azure',
 		'Heroku',
-		'Cloud Providors'
+		'Cloud Providors',
+		'jQuery',
+		'UI',
+		'UX',
+		'Babel',
+		'Webpack'
 	]
 });
 

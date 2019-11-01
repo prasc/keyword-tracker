@@ -412,7 +412,7 @@ footer a {
 }
 
 .hwt-content {
-  width: 500px;
+  min-width: 700px;
   height: 200px;
   padding: 20px;
   border: 1px solid #adb5bd;
