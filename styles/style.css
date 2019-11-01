@@ -213,6 +213,10 @@ input::-moz-focus-inner {
   overflow: hidden;
 }
 
+.hl {
+  background: #ffc600;
+}
+
 html {
   font-size: 62.5%;
 }
@@ -251,17 +255,19 @@ header p {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   border-bottom: 1px solid #bdc3c7;
   font: 300 28px 'Ubuntu', sans-serif;
 }
 
 .app-insert #skill {
   width: 90%;
-  height: 60px;
+  height: 200px;
   background: none;
-  border: none;
+  border: 1px solid black;
   outline: none;
-  padding: 20px;
 }
 
 .app-insert #submit {
@@ -295,6 +301,23 @@ header p {
           align-items: center;
 }
 
+.listOfSkills div .skillName {
+  width: 50%;
+}
+
+@media (max-width: 750px) {
+  .listOfSkills div {
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+  }
+}
+
+@media (max-width: 500px) {
+  .listOfSkills div .skillName {
+    width: 50%;
+  }
+}
+
 .listOfSkills div li {
   width: 10%;
   font-size: 2rem;
@@ -306,6 +329,18 @@ header p {
   font-size: 4rem;
 }
 
+@media (max-width: 750px) {
+  .listOfSkills div p {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .listOfSkills div p {
+    font-size: 2.5rem;
+  }
+}
+
 .listOfSkills div button {
   width: 10%;
   background: none;
@@ -315,6 +350,12 @@ header p {
   font-size: 3rem;
   cursor: pointer;
   outline: inherit;
+}
+
+@media (max-width: 500px) {
+  .listOfSkills div button {
+    font-size: 2rem;
+  }
 }
 
 footer {

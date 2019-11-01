@@ -48,16 +48,16 @@ header p {
 	width: 100%;
 	margin: 50px auto 20px;
 	display: flex;
+	justify-content: space-between;
 	border-bottom: 1px solid #bdc3c7;
 	font: 300 28px 'Ubuntu', sans-serif;
 }
 .app-insert #skill {
 	width: 90%;
-	height: 60px;
+	height: 200px;
 	background: none;
-	border: none;
+	border: 1px solid black;
 	outline: none;
-	padding: 20px;
 }
 
 .app-insert #submit {
@@ -83,6 +83,17 @@ header p {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		.skillName {
+			width: 50%;
+		}
+		@media (max-width: 750px) {
+			justify-content: space-around;
+		}
+		@media (max-width: 500px) {
+			.skillName {
+				width: 50%;
+			}
+		}
 		li {
 			width: 10%;
 			font-size: 2rem;
@@ -91,6 +102,12 @@ header p {
 			text-align: center;
 			width: 10%;
 			font-size: 4rem;
+			@media (max-width: 750px) {
+				font-size: 3rem;
+			}
+			@media (max-width: 500px) {
+				font-size: 2.5rem;
+			}
 		}
 		button {
 			width: 10%;
@@ -101,6 +118,9 @@ header p {
 			font-size: 3rem;
 			cursor: pointer;
 			outline: inherit;
+			@media (max-width: 500px) {
+				font-size: 2rem;
+			}
 		}
 	}
 }
