@@ -1,11 +1,3 @@
-// TODO: create/find array of all the keywords
-// * eg. const arrayOfKeyword = [];
-// TODO: replace input type text with textarea and add an event listener to the text area, which calls displayMatches
-// * eg: const searchInput = document.querySelector('.search');
-// * searchInput.addEventListener('change', displayMatches);
-// * searchInput.addEventListener('keyup', displayMatches);
-// TODO: displayMatches will take the value of the text area and call a function that function that takes the text the user adds and compares it to the arrayOfKeywords and only returns the characters that do match the keyword
-// TODO: the displayMatches function will then filter through the textarea and replace all the values that matched with a highlighted value using a RegExp
 // TODO: So now we have a textarea with text, and it highlights the words in the text which match our predetermined keywords
 // TODO: Once we click send, we call another function called checkIfFunctionExists which will map through the matching keywords array and check this:
 // ? 	matchingKeyWords.map(word => {
@@ -149,13 +141,13 @@ const textAreaUserInput = document.querySelector('#skill');
 // assigning global variables
 let count = 1; // change to inital count
 const arrayOfSkills = [];
-let matchWordsArray = [];
+let arrayOfHighlightedWords = [];
 
 // function to render newly typed skill and call sendToFirebase function
 function addItemToList(e) {
 	e.preventDefault();
-	matchWordsArray.map((matchedWord) => {
-		const skill = matchedWord;
+	arrayOfHighlightedWords.map((highlightedWord) => {
+		const skill = highlightedWord;
 
 		if (!skill) {
 			alert('Type something');
@@ -257,141 +249,19 @@ function findMatches(wordToMatch, arrayOfKeyword) {
 	return arrayOfMatchedWords;
 }
 
-highlightMatchingWords = (e) => {
+createArrayOfHightlightedWords = (e) => {
 	const userInput = e.target.value;
 	let matchingWords = findMatches(userInput, arrayOfKeyword);
 
-	matchWordsArray = [...matchingWords];
+	arrayOfHighlightedWords = [...matchingWords];
 };
 
 $('.array-example').highlightWithinTextarea({
-	highlight: [
-		'Git',
-		'Terminal',
-		'Data Structures',
-		'Algorithms',
-		'Github',
-		'Version Control',
-		'SSH',
-		'HTTP',
-		'HTTPS',
-		'API',
-		'SEO',
-		'Accessibility',
-		'HTML',
-		'CSS',
-		'Javascript',
-		'Responsive',
-		'CSS3',
-		'HTML5',
-		'ES6',
-		'XHR',
-		'SASS',
-		'npm',
-		'Boostrap',
-		'BEM',
-		'gulp',
-		'Redux',
-		'Prettier',
-		'ESLint',
-		'Webpack',
-		'React',
-		'Angular',
-		'Vue.js',
-		'Vuex',
-		'RxJS',
-		'ngrx',
-		'Styled Components',
-		'CSS Modules',
-		'Jest',
-		'Enzyme',
-		'Mocha',
-		'Chai',
-		'Karma',
-		'Jasmine',
-		'Ava',
-		'Protractor',
-		'Storage',
-		'Web Sockets',
-		'Service Workeres',
-		'Location',
-		'DevTools',
-		'Flow',
-		'TypeScript',
-		'React.js',
-		'Next.js',
-		'After.js',
-		'Nuxt.js',
-		'Gatsby',
-		'Electron',
-		'React Native',
-		'NativeScript',
-		'Web Assembly',
-		'Java',
-		'.NET',
-		'Haskell',
-		'Clojure',
-		'Erlang',
-		'Python',
-		'Ruby',
-		'PHP',
-		'Node.js',
-		'Go',
-		'Rust',
-		'Package Manager',
-		'Oracle',
-		'MySQL',
-		'MariaDB',
-		'PostgreSQL',
-		'MSSQL',
-		'MongoDB',
-		'Cassandra',
-		'Memcached',
-		'Redis',
-		'OAuth',
-		'Basic Authentification',
-		'Token Authentification',
-		'JWT',
-		'OpenID',
-		'Apache',
-		'Nginx',
-		'C++',
-		'C#',
-		'I/O Management',
-		'Memory',
-		'Storage',
-		'File Systems',
-		'Linux',
-		'Unix',
-		'Windows',
-		'DNS',
-		'FTP',
-		'SSL',
-		'Tomcat',
-		'Caddy',
-		'VIM',
-		'Nano',
-		'Emacs',
-		'Docker',
-		'Kubernates',
-		'Terraform',
-		'Cloud',
-		'Jenkins',
-		'AWS',
-		'Google Cloud',
-		'Azure',
-		'Heroku',
-		'Cloud Providors',
-		'jQuery',
-		'UI',
-		'UX',
-		'Babel',
-		'Webpack'
-	]
+	highlight: arrayOfKeyword
 });
 
-textAreaUserInput.addEventListener('change', highlightMatchingWords);
-textAreaUserInput.addEventListener('keyup', highlightMatchingWords);
+textAreaUserInput.addEventListener('change', createArrayOfHightlightedWords);
+textAreaUserInput.addEventListener('keyup', createArrayOfHightlightedWords);
 window.addEventListener('load', updateListFromFirebase);
 entireForm.addEventListener('submit', addItemToList);
 listOfSkills.addEventListener('click', increaseCount);
