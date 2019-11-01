@@ -186,7 +186,7 @@ updateListFromFirebase = dbRef.on('value', (response) => {
 		listOfSkills.innerHTML += `
 	<div class="skillContainer">
 		<li class="skillName">${item.skill}</li>
-		<p class="currentScore">${item.count}</p>
+		<p class="count">${item.count}</p>
 		<button class="plus">+</button>
 		<button class="minus">-</button>
 	</div>
@@ -195,38 +195,25 @@ updateListFromFirebase = dbRef.on('value', (response) => {
 	console.log('just updated UI');
 });
 
-// function to increase counter by one on button click and update firebase
-function increaseCount(e) {
-	if (!e.target.matches('.plus')) return;
-	const targ = e.target;
-
-	let currentScore = targ.parentElement.querySelector('.currentScore')
-		.innerText;
-	currentScore = Number(currentScore) + 1;
-	targ.parentElement.querySelector('.currentScore').innerText = currentScore;
-
-	let skillName = e.target.parentElement.children[0].innerText;
+// function to increase/decrease counter by one on button click and delete any skill with a count of 0
+function changeCount({ target }) {
+	let count = target.parentElement.querySelector('.count').innerText;
+	let skillName = target.parentElement.querySelector('.skillName').innerText;
 	const userRef = dbRef.child(`${skillName}`);
 
-	const count = currentScore;
-	userRef.update({
-		count: count
-	});
-	return;
+	if (target.matches('.minus')) {
+		count = Number(count) - 1;
+
+		updateCountOnFirebase(count, userRef);
+	} else if (target.matches('.plus')) {
+		count = Number(count) + 1;
+
+		updateCountOnFirebase(count, userRef);
+	}
 }
 
-// function to decrease counter by one on button click and delete any skill with a count of 0
-function decreaseCount(e) {
-	if (!e.target.matches('.minus')) return;
-
-	const targ = e.target;
-
-	let currentScore = targ.parentElement.children[1].innerText;
-	currentScore = Number(currentScore) - 1;
-	let skillName = e.target.parentElement.children[0].innerText;
-	const userRef = dbRef.child(`${skillName}`);
-	const count = currentScore;
-
+// update count on firebase
+function updateCountOnFirebase(count, userRef) {
 	if (count == 0) {
 		userRef.remove();
 	} else {
@@ -236,6 +223,7 @@ function decreaseCount(e) {
 	}
 }
 
+// function that takes userinput and compares it to keyword list and returns the matches
 function findMatches(wordToMatch, arrayOfKeyword) {
 	let currentWordFromUserInput = wordToMatch.split(' ');
 	let arrayOfMatchedWords = [];
@@ -249,13 +237,14 @@ function findMatches(wordToMatch, arrayOfKeyword) {
 	return arrayOfMatchedWords;
 }
 
+// function that creates array of highlighted words in the text area
 createArrayOfHightlightedWords = (e) => {
 	const userInput = e.target.value;
 	let matchingWords = findMatches(userInput, arrayOfKeyword);
-
 	arrayOfHighlightedWords = [...matchingWords];
 };
 
+// jQuery function that handles highlighting the keywords in textarea
 $('.array-example').highlightWithinTextarea({
 	highlight: arrayOfKeyword
 });
@@ -264,5 +253,4 @@ textAreaUserInput.addEventListener('change', createArrayOfHightlightedWords);
 textAreaUserInput.addEventListener('keyup', createArrayOfHightlightedWords);
 window.addEventListener('load', updateListFromFirebase);
 entireForm.addEventListener('submit', addItemToList);
-listOfSkills.addEventListener('click', increaseCount);
-listOfSkills.addEventListener('click', decreaseCount);
+listOfSkills.addEventListener('click', changeCount);
