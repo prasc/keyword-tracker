@@ -261,6 +261,7 @@ header p {
 #skill {
   border: none;
   color: #6e7070;
+  word-break: break-all;
 }
 
 .app-insert #submit {
@@ -431,7 +432,7 @@ footer a {
 
 .hwt-content mark {
   border-radius: 3px;
-  background-color: #d0bfff;
+  background-color: #a3daff;
 }
 
 .hwt-content mark.red {
@@ -444,22 +445,5 @@ footer a {
 
 .hwt-content mark.yellow {
   background-color: #ffec99;
-}
-
-code {
-  padding: 0 5px;
-  font-family: 'Droid Sans Mono', sans-serif;
-  font-size: 16px;
-  background-color: #dee2e6;
-}
-
-script {
-  display: block;
-  margin-top: 10px;
-  padding-left: 15px;
-  border-left: 5px solid #adb5bd;
-  background-color: #e9ecef;
-  white-space: pre-wrap;
-  font: 14px/1.5 'Droid Sans Mono', sans-serif;
 }
 /*# sourceMappingURL=style.css.map */
