@@ -258,6 +258,11 @@ header p {
   font: 300 28px 'Ubuntu', sans-serif;
 }
 
+#skill {
+  border: none;
+  color: #6e7070;
+}
+
 .app-insert #submit {
   border: none;
   margin: 0 auto;

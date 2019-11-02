@@ -1,14 +1,5 @@
-// TODO: So now we have a textarea with text, and it highlights the words in the text which match our predetermined keywords
-// TODO: Once we click send, we call another function called checkIfFunctionExists which will map through the matching keywords array and check this:
-// ? 	matchingKeyWords.map(word => {
-// ?	1. word exists in arrayOfSkills? then add +1 to it's count and 			send to firebase
-// ?	2. word does not exist in arrayOfSkills but exist in 					arrayOfKeyword, then push {word, count} object to firebase
-// ?	)}
-// TODO: Sending to firebase just re-renders our list with the values which should work!
-
-// TODO: Error handling: adding rules to textarea for example a counte that tells you how many characters you are at and also a note that tells you maximum characters
-
-const arrayOfKeyword = [
+// list of keywords that is used to compare to user input.
+const hugeListOfKeywords = [
 	'Git',
 	'Terminal',
 	'Data Structures',
@@ -147,21 +138,21 @@ let arrayOfHighlightedWords = [];
 function addItemToList(e) {
 	e.preventDefault();
 	arrayOfHighlightedWords.map((highlightedWord) => {
-		const skill = highlightedWord;
-
-		if (!skill) {
+		if (!highlightedWord) {
 			alert('Type something');
 			entireForm.reset();
 			this.querySelector('#skill').focus();
 			return;
 		}
 
-		arrayOfSkills.push(skill);
-		sendToFirebase(e, skill);
+		dbRef.on('value', function(snapshot) {
+			console.log(snapshot.val()[`${highlightedWord}`]);
+		});
+
+		arrayOfSkills.push(highlightedWord);
+		sendToFirebase(e, highlightedWord);
 		entireForm.reset();
 	});
-
-	// const skill = this.querySelector('#skill').value;
 }
 
 // function to send new item to firebase
@@ -176,13 +167,13 @@ sendToFirebase = (event, skill) => {
 // function to listen to changes in firebase database and render UI on change
 updateListFromFirebase = dbRef.on('value', (response) => {
 	const firebaseArray = Object.values(response.val());
-	const sortedArray = firebaseArray.sort((a, b) =>
+	const sortedFirebaseArray = firebaseArray.sort((a, b) =>
 		a.count < b.count ? 1 : -1
 	);
 
 	listOfSkills.innerHTML = '';
 
-	sortedArray.map((item) => {
+	sortedFirebaseArray.map((item) => {
 		listOfSkills.innerHTML += `
 	<div class="skillContainer">
 		<li class="skillName">${item.skill}</li>
@@ -192,11 +183,31 @@ updateListFromFirebase = dbRef.on('value', (response) => {
 	</div>
 	`;
 	});
-	console.log('just updated UI');
 });
 
+// function that takes userinput and compares it to keyword list and returns the matches
+function findMatches(wordToMatch, hugeListOfKeywords) {
+	let currentWordFromUserInput = wordToMatch.split(' ');
+	let arrayOfMatchedWords = [];
+	hugeListOfKeywords.filter((word) => {
+		currentWordFromUserInput.map((item) => {
+			if (word.includes(item) && item != '') {
+				arrayOfMatchedWords.push(word);
+			}
+		});
+	});
+	return arrayOfMatchedWords;
+}
+
+// function that creates array of highlighted words in the text area
+createArrayOfHightlightedWords = ({ target }) => {
+	const userInput = target.value;
+	let matchingWords = findMatches(userInput, hugeListOfKeywords);
+	arrayOfHighlightedWords = [...matchingWords];
+};
+
 // function to increase/decrease counter by one on button click and delete any skill with a count of 0
-function changeCount({ target }) {
+function updateCount({ target }) {
 	let count = target.parentElement.querySelector('.count').innerText;
 	let skillName = target.parentElement.querySelector('.skillName').innerText;
 	const userRef = dbRef.child(`${skillName}`);
@@ -223,34 +234,13 @@ function updateCountOnFirebase(count, userRef) {
 	}
 }
 
-// function that takes userinput and compares it to keyword list and returns the matches
-function findMatches(wordToMatch, arrayOfKeyword) {
-	let currentWordFromUserInput = wordToMatch.split(' ');
-	let arrayOfMatchedWords = [];
-	arrayOfKeyword.filter((word) => {
-		currentWordFromUserInput.map((item) => {
-			if (word.includes(item) && item != '') {
-				arrayOfMatchedWords.push(word);
-			}
-		});
-	});
-	return arrayOfMatchedWords;
-}
-
-// function that creates array of highlighted words in the text area
-createArrayOfHightlightedWords = (e) => {
-	const userInput = e.target.value;
-	let matchingWords = findMatches(userInput, arrayOfKeyword);
-	arrayOfHighlightedWords = [...matchingWords];
-};
-
 // jQuery function that handles highlighting the keywords in textarea
 $('.array-example').highlightWithinTextarea({
-	highlight: arrayOfKeyword
+	highlight: hugeListOfKeywords
 });
 
 textAreaUserInput.addEventListener('change', createArrayOfHightlightedWords);
 textAreaUserInput.addEventListener('keyup', createArrayOfHightlightedWords);
 window.addEventListener('load', updateListFromFirebase);
 entireForm.addEventListener('submit', addItemToList);
-listOfSkills.addEventListener('click', changeCount);
+listOfSkills.addEventListener('click', updateCount);

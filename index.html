@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 		<title>Keyword Tracker</title>
-		<link rel="stylesheet" href="/styles/style.css" />
+		<link rel="stylesheet" href="styles/style.css" />
 	</head>
 	<body>
 		<header class="main-header">
@@ -22,6 +22,7 @@
 					class="array-example"
 					id="skill"
 					name="skill"
+					wrap="off"
 				></textarea>
 				<input type="submit" id="submit" value="Send" />
 			</div>
@@ -39,6 +40,8 @@
 			</p>
 		</footer>
 
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="/scripts/jquery.highlight-within-textarea.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-app.js"></script>
 		<script>
 			var firebaseConfig = {
@@ -52,10 +55,7 @@
 			};
 			firebase.initializeApp(firebaseConfig);
 		</script>
-
 		<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script src="/scripts/jquery.highlight-within-textarea.js"></script>
 		<script type="text/javascript" src="/scripts/script.js"></script>
 	</body>
 </html>
