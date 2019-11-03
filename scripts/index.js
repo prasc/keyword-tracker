@@ -5,8 +5,6 @@ const listOfSkills = document.querySelector('.listOfSkills');
 const textAreaUserInput = document.querySelector('#skill');
 
 // assigning global variables
-let arrayOfSkills = [];
-let arrayOfMatchedWords = [];
 let arrayOfHighlightedWords = [];
 
 // function to render newly typed skill and call sendToFirebase function
@@ -16,7 +14,6 @@ function addItemToList(e) {
 	let count = 1; // setting default count to 1 for all new skills
 
 	arrayOfHighlightedWords.map((highlightedWord) => {
-		arrayOfSkills.push(highlightedWord);
 		sendToFirebase(highlightedWord, count);
 	});
 
@@ -25,10 +22,20 @@ function addItemToList(e) {
 
 // function to send new item to firebase
 sendToFirebase = (skill, count) => {
-	const newSkill = { skill, count };
-	// [skill] has to be changed to something else..
+	let b64 = btoa(skill);
+	let newSkill = { skill, count };
+
+	dbRef.on('value', (response) => {
+		const firebaseArray = Object.values(response.val());
+		firebaseArray.forEach((item) => {
+			if (item.skill === skill) {
+				newSkill.count = item.count;
+				newSkill.count += 1;
+			}
+		});
+	});
 	dbRef.update({
-		[skill]: newSkill
+		[b64]: newSkill
 	});
 };
 
@@ -62,41 +69,28 @@ renderFirebaseArray = (sortedFirebaseArray) => {
 // create array of highlighted words from text area
 createArrayOfHightlightedWords = ({ target }) => {
 	const userInput = target.value;
-	let matchingWords = findMatches(userInput);
-	arrayOfHighlightedWords = [...matchingWords];
+	findMatches(userInput);
 };
 
 // returns matches
 function findMatches(userInput) {
 	let stringOfUserInput = removePunctation(userInput);
-
 	compareUserInput(hugeListOfKeywords, stringOfUserInput);
-
-	return arrayOfMatchedWords;
 }
 
 // compares hugeListOfKeywords with userInput
 function compareUserInput(hugeListOfKeywords, stringOfUserInput) {
-	// console.log('userInput', stringOfUserInput);
-
-	// const regex = new RegExp(hugeListOfKeywords, 'gi');
-	hugeListOfKeywords.map((currentKeyword) => {
-		//? Compare currentWord to stringOfUserInput
-		//? push words or two-word-phrases from stringOfUserInput that match currentWord
-		//! convert stringOfUserInput into array at space, or if two-word-phrase at every other space.
-		if (stringOfUserInput.includes(currentKeyword)) {
-			console.log('current word is', currentKeyword);
-			console.log('current stringOfUserInput is', stringOfUserInput);
-		}
+	let arrayOfUserInput = stringOfUserInput.split(' ');
+	arrayOfUserInput.map((word) => {
+		hugeListOfKeywords.map((keyword) => {
+			if (
+				keyword.toLowerCase() === word.toLowerCase() &&
+				!arrayOfHighlightedWords.includes(keyword)
+			) {
+				arrayOfHighlightedWords.push(keyword);
+			}
+		});
 	});
-
-	// hugeListOfKeywords.filter((keyword) => {
-	// 	arrayOfWordsFromUserInput.map((currentWord) => {
-	// 		if (keyword == currentWord && currentWord != '') {
-	// 			arrayOfMatchedWords.push(keyword);
-	// 		}
-	// 	});
-	// });
 }
 
 // remove punctation and extra spaces from userInput
@@ -114,8 +108,9 @@ function updateCount({ target }) {
 
 	// need to change skill name to something other than inner text
 	let skillName = target.parentElement.querySelector('.skillName').innerText;
+	console.log(skillName);
 	// then reference something else as the skillname
-	const userRef = dbRef.child(`${skillName}`);
+	const userRef = dbRef.child(`${btoa(skillName)}`);
 
 	if (target.matches('.minus')) {
 		count = Number(count) - 1;
