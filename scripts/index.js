@@ -59,8 +59,8 @@ renderFirebaseArray = (sortedFirebaseArray) => {
 	<div class="skillContainer">
 		<li class="skillName">${item.skill}</li>
 		<p class="count">${item.count}</p>
-		<button class="plus">+</button>
-		<button class="minus">-</button>
+		<button class="plus"><i class="fas fa-plus plus"></i></button>
+		<button class="minus"><i class="fas fa-minus minus"></i></button>
 	</div>
 	`;
 	});
@@ -105,10 +105,12 @@ function removePunctation(userInput) {
 
 // update counter & delete any skill with a count of 0
 function updateCount({ target }) {
-	let count = target.parentElement.querySelector('.count').innerText;
-
+	let count = target.parentElement.parentElement.querySelector('.count')
+		.innerText;
 	// need to change skill name to something other than inner text
-	let skillName = target.parentElement.querySelector('.skillName').innerText;
+	let skillName = target.parentElement.parentElement.querySelector(
+		'.skillName'
+	).innerText;
 	console.log(skillName);
 	// then reference something else as the skillname
 	const userRef = dbRef.child(`${btoa(skillName)}`);

@@ -282,11 +282,12 @@ header p {
 
 .listOfSkills {
   list-style-type: none;
+  width: 80%;
   margin: 0 auto;
   color: #6e7070;
 }
 
-.listOfSkills div {
+.listOfSkills .skillContainer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -296,49 +297,52 @@ header p {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  background: white;
+  padding: 0 20px;
+  border-radius: 5%;
 }
 
-.listOfSkills div .skillName {
+.listOfSkills .skillContainer .skillName {
   width: 50%;
 }
 
 @media (max-width: 750px) {
-  .listOfSkills div {
+  .listOfSkills .skillContainer {
     -ms-flex-pack: distribute;
         justify-content: space-around;
   }
 }
 
 @media (max-width: 500px) {
-  .listOfSkills div .skillName {
+  .listOfSkills .skillContainer .skillName {
     width: 50%;
   }
 }
 
-.listOfSkills div li {
+.listOfSkills .skillContainer li {
   width: 10%;
   font-size: 2rem;
 }
 
-.listOfSkills div p {
+.listOfSkills .skillContainer p {
   text-align: center;
   width: 10%;
   font-size: 4rem;
 }
 
 @media (max-width: 750px) {
-  .listOfSkills div p {
+  .listOfSkills .skillContainer p {
     font-size: 3rem;
   }
 }
 
 @media (max-width: 500px) {
-  .listOfSkills div p {
+  .listOfSkills .skillContainer p {
     font-size: 2.5rem;
   }
 }
 
-.listOfSkills div button {
+.listOfSkills .skillContainer button {
   width: 10%;
   background: none;
   color: inherit;
@@ -350,7 +354,7 @@ header p {
 }
 
 @media (max-width: 500px) {
-  .listOfSkills div button {
+  .listOfSkills .skillContainer button {
     font-size: 2rem;
   }
 }

@@ -79,12 +79,16 @@ header p {
 
 .listOfSkills {
 	list-style-type: none;
+	width: 80%;
 	margin: 0 auto;
 	color: #6e7070;
-	div {
+	.skillContainer {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		background: white;
+		padding: 0 20px;
+		border-radius: 5%;
 		.skillName {
 			width: 50%;
 		}
