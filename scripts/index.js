@@ -12,7 +12,7 @@ function addItemToList(e) {
 	e.preventDefault();
 
 	let count = 1; // setting default count to 1 for all new skills
-
+	console.log(arrayOfHighlightedWords);
 	arrayOfHighlightedWords.map((highlightedWord) => {
 		sendToFirebase(highlightedWord, count);
 	});
@@ -29,7 +29,7 @@ sendToFirebase = (skill, count) => {
 		const firebaseArray = Object.values(response.val());
 		firebaseArray.forEach((item) => {
 			if (item.skill === skill) {
-				newSkill.count = item.count;
+				newSkill.count = Number(item.count);
 				newSkill.count += 1;
 			}
 		});
@@ -69,6 +69,7 @@ renderFirebaseArray = (sortedFirebaseArray) => {
 // create array of highlighted words from text area
 createArrayOfHightlightedWords = ({ target }) => {
 	const userInput = target.value;
+	arrayOfHighlightedWords = [];
 	findMatches(userInput);
 };
 

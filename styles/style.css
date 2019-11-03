@@ -243,6 +243,9 @@ header h1 span {
 
 header p {
   color: #21333fda;
+  width: 50%;
+  margin: 0 auto;
+  padding-bottom: 10px;
 }
 
 .app-insert {
