@@ -56,12 +56,12 @@ sortFirebaseArray = (firebaseArray) => {
 renderFirebaseArray = (sortedFirebaseArray) => {
 	sortedFirebaseArray.map((item) => {
 		listOfSkills.innerHTML += `
-	<div class="skillContainer">
-		<li class="skillName">${item.skill}</li>
-		<p class="count">${item.count}</p>
-		<button class="plus"><i class="fas fa-plus plus"></i></button>
-		<button class="minus"><i class="fas fa-minus minus"></i></button>
-	</div>
+	<tr>
+		<td class="text-left skillName">${item.skill}</td>
+		<td class="text-left count">${item.count}</td>
+		<td class="text-left plus"><i class="fas fa-plus"></i></td>
+		<td class="text-left minus"><i class="fas fa-minus"></i></td>
+	</tr>
 	`;
 	});
 };
@@ -105,19 +105,22 @@ function removePunctation(userInput) {
 
 // update counter & delete any skill with a count of 0
 function updateCount({ target }) {
-	let count = target.parentElement.parentElement.querySelector('.count')
-		.innerText;
-	// need to change skill name to something other than inner text
-	let skillName = target.parentElement.parentElement.querySelector(
-		'.skillName'
-	).innerText;
-	console.log(skillName);
-	// then reference something else as the skillname
+	if (target.matches('.minus') || target.matches('.plus')) {
+		var count = target.parentElement.querySelector('.count').innerText;
+		var skillName = target.parentElement.querySelector('.skillName')
+			.innerText;
+	} else if (target.matches('.fas')) {
+		var count = target.parentElement.parentElement.querySelector('.count')
+			.innerText;
+		var skillName = target.parentElement.parentElement.querySelector(
+			'.skillName'
+		).innerText;
+	}
 	const userRef = dbRef.child(`${btoa(skillName)}`);
 
-	if (target.matches('.minus')) {
+	if (target.matches('.minus') || target.matches('.fa-minus')) {
 		count = Number(count) - 1;
-	} else if (target.matches('.plus')) {
+	} else if (target.matches('.plus') || target.matches('.fa-plus')) {
 		count = Number(count) + 1;
 	}
 	updateCountOnFirebase(count, userRef);

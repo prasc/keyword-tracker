@@ -26,27 +26,27 @@
 		</header>
 
 		<form action="" class="entireForm">
-			<div class="app-insert">
-				<label for="skill" aria-hidden="true">Skill</label>
-				<textarea
-					class="array-example"
-					id="skill"
-					name="skill"
-					placeholder="Type in or copy and paste job description here."
-					rows="20"
-					name="comment[text]"
-					id="skill"
-					cols="40"
-					class="ui-autocomplete-input"
-					autocomplete="off"
-					role="textbox"
-					aria-autocomplete="list"
-					aria-haspopup="true"
-				></textarea>
-				<input type="submit" id="submit" value="Send" />
-			</div>
+			<label for="skill" aria-hidden="true">Skill</label>
+			<textarea
+				class="array-example ui-autocomplete-input"
+				id="skill"
+				name="skill"
+				placeholder="Type in or copy and paste job description here."
+			></textarea>
+			<input type="submit" id="submit" value="Send" />
 		</form>
-		<ul class="listOfSkills"></ul>
+		<table class="table-fill">
+			<thead>
+				<tr>
+					<th class="text-left">Skill</th>
+					<th class="text-left">Count</th>
+					<th class="text-left">Inc</th>
+					<th class="text-left">Dec</th>
+				</tr>
+			</thead>
+			<tbody class="table-hover listOfSkills"></tbody>
+		</table>
+		<!-- <ul class="listOfSkills"></ul> -->
 		<footer>
 			<p>
 				Copyright © 2019
