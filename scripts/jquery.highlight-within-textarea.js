@@ -35,7 +35,11 @@
 			if (!instance) {
 				return 'falsey';
 			} else if (Array.isArray(instance)) {
-				if (instance.length === 2 && typeof instance[0] === 'number' && typeof instance[1] === 'number') {
+				if (
+					instance.length === 2 &&
+					typeof instance[0] === 'number' &&
+					typeof instance[1] === 'number'
+				) {
 					return 'range';
 				} else {
 					return 'array';
@@ -59,10 +63,13 @@
 				.on('input.' + ID, this.handleInput.bind(this))
 				.on('scroll.' + ID, this.handleScroll.bind(this));
 
-			this.$highlights = $('<div>', { class: ID + '-highlights ' + ID + '-content' });
+			this.$highlights = $('<div>', {
+				class: ID + '-highlights ' + ID + '-content'
+			});
 
-			this.$backdrop = $('<div>', { class: ID + '-backdrop' })
-				.append(this.$highlights);
+			this.$backdrop = $('<div>', { class: ID + '-backdrop' }).append(
+				this.$highlights
+			);
 
 			this.$container = $('<div>', { class: ID + '-container' })
 				.insertAfter(this.$el)
@@ -94,7 +101,10 @@
 				return 'firefox';
 			} else if (!!ua.match(/msie|trident\/7|edge/)) {
 				return 'ie';
-			} else if (!!ua.match(/ipad|iphone|ipod/) && ua.indexOf('windows phone') === -1) {
+			} else if (
+				!!ua.match(/ipad|iphone|ipod/) &&
+				ua.indexOf('windows phone') === -1
+			) {
 				// Windows Phone flags itself as "like iPhone", thus the extra check
 				return 'ios';
 			} else {
@@ -107,13 +117,19 @@
 		fixFirefox: function() {
 			// take padding and border pixels from highlights div
 			let padding = this.$highlights.css([
-				'padding-top', 'padding-right', 'padding-bottom', 'padding-left'
+				'padding-top',
+				'padding-right',
+				'padding-bottom',
+				'padding-left'
 			]);
 			let border = this.$highlights.css([
-				'border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width'
+				'border-top-width',
+				'border-right-width',
+				'border-bottom-width',
+				'border-left-width'
 			]);
 			this.$highlights.css({
-				'padding': '0',
+				padding: '0',
 				'border-width': '0'
 			});
 
@@ -123,14 +139,14 @@
 					'margin-top': '+=' + padding['padding-top'],
 					'margin-right': '+=' + padding['padding-right'],
 					'margin-bottom': '+=' + padding['padding-bottom'],
-					'margin-left': '+=' + padding['padding-left'],
+					'margin-left': '+=' + padding['padding-left']
 				})
 				.css({
 					// give border pixels to backdrop div
 					'margin-top': '+=' + border['border-top-width'],
 					'margin-right': '+=' + border['border-right-width'],
 					'margin-bottom': '+=' + border['border-bottom-width'],
-					'margin-left': '+=' + border['border-left-width'],
+					'margin-left': '+=' + border['border-left-width']
 				});
 		},
 
@@ -188,7 +204,7 @@
 		getRegExpRanges: function(input, regex) {
 			let ranges = [];
 			let match;
-			while (match = regex.exec(input), match !== null) {
+			while (((match = regex.exec(input)), match !== null)) {
 				ranges.push([match.index, match.index + match[0].length]);
 				if (!regex.global) {
 					// non-global regexes do not increase lastIndex, causing an infinite loop,
@@ -204,7 +220,9 @@
 			let inputLower = input.toLowerCase();
 			let strLower = str.toLowerCase();
 			let index = 0;
-			while (index = inputLower.indexOf(strLower, index), index !== -1) {
+			while (
+				((index = inputLower.indexOf(strLower, index)), index !== -1)
+			) {
 				ranges.push([index, index + strLower.length]);
 				index += strLower.length;
 			}
@@ -221,7 +239,8 @@
 				ranges.forEach(function(range) {
 					// persist class name as a property of the array
 					if (range.className) {
-						range.className = custom.className + ' ' + range.className;
+						range.className =
+							custom.className + ' ' + range.className;
 					} else {
 						range.className = custom.className;
 					}
@@ -234,9 +253,15 @@
 		removeStaggeredRanges: function(ranges) {
 			let unstaggeredRanges = [];
 			ranges.forEach(function(range) {
-				let isStaggered = unstaggeredRanges.some(function(unstaggeredRange) {
-					let isStartInside = range[0] > unstaggeredRange[0] && range[0] < unstaggeredRange[1];
-					let isStopInside = range[1] > unstaggeredRange[0] && range[1] < unstaggeredRange[1];
+				let isStaggered = unstaggeredRanges.some(function(
+					unstaggeredRange
+				) {
+					let isStartInside =
+						range[0] > unstaggeredRange[0] &&
+						range[0] < unstaggeredRange[1];
+					let isStopInside =
+						range[1] > unstaggeredRange[0] &&
+						range[1] < unstaggeredRange[1];
 					return isStartInside !== isStopInside; // xor
 				});
 				if (!isStaggered) {
@@ -288,7 +313,10 @@
 				} else {
 					markup = '{{hwt-mark-stop}}';
 				}
-				input = input.slice(0, boundary.index) + markup + input.slice(boundary.index);
+				input =
+					input.slice(0, boundary.index) +
+					markup +
+					input.slice(boundary.index);
 			});
 
 			// this keeps scrolling aligned when input ends with a newline
@@ -303,7 +331,10 @@
 			}
 
 			// replace start tokens with opening <mark> tags with class name
-			input = input.replace(/\{\{hwt-mark-start\|(\d+)\}\}/g, function(match, submatch) {
+			input = input.replace(/\{\{hwt-mark-start\|(\d+)\}\}/g, function(
+				match,
+				submatch
+			) {
 				var className = boundaries[+submatch].className;
 				if (className) {
 					return '<mark class="' + className + '">';
@@ -326,7 +357,10 @@
 			// horizontal scrolling, this compensates by shifting highlights by the
 			// horizontally scrolled amount to keep things aligned
 			let scrollLeft = this.$el.scrollLeft();
-			this.$backdrop.css('transform', (scrollLeft > 0) ? 'translateX(' + -scrollLeft + 'px)' : '');
+			this.$backdrop.css(
+				'transform',
+				scrollLeft > 0 ? 'translateX(' + -scrollLeft + 'px)' : ''
+			);
 		},
 
 		// in Chrome, page up/down in the textarea will shift stuff within the
@@ -342,7 +376,7 @@
 				.removeClass(ID + '-text ' + ID + '-input')
 				.off(ID)
 				.removeData(ID);
-		},
+		}
 	};
 
 	// register the jQuery plugin
@@ -377,4 +411,9 @@
 			}
 		});
 	};
+
+	// jQuery function that handles highlighting the keywords in textarea
+	$('.array-example').highlightWithinTextarea({
+		highlight: hugeListOfKeywords
+	});
 })(jQuery);
