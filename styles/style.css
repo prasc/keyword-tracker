@@ -237,6 +237,12 @@ header h1 {
   color: #21333fda;
 }
 
+@media (max-width: 500px) {
+  header h1 {
+    font-size: 30px;
+  }
+}
+
 header h1 span {
   font-weight: 700;
 }
@@ -248,25 +254,64 @@ header p {
   padding-bottom: 10px;
 }
 
+@media (max-width: 500px) {
+  header p {
+    width: 70%;
+  }
+}
+
 .entireForm {
-  max-width: 650px;
+  max-width: 600px;
   width: 100%;
-  padding: 20px 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  margin: 0 auto;
+  margin: 20px auto 20px auto;
+  padding: 20px;
+}
+
+@media (max-width: 630px) {
+  .entireForm {
+    padding: 20px;
+    margin: 0 auto;
+    width: 90%;
+  }
+}
+
+@media (max-width: 630px) {
+  .entireForm {
+    width: 90%;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
 }
 
 .entireForm label {
   visibility: hidden;
 }
 
+.entireForm textarea {
+  width: 450px;
+}
+
 .entireForm #submit {
-  width: 100px;
+  width: 10%;
+}
+
+@media (max-width: 630px) {
+  .entireForm #submit {
+    width: 60%;
+    padding: 20px;
+    margin: 0 auto;
+  }
 }
 
 .listOfSkills {
@@ -352,12 +397,12 @@ footer {
   width: 100%;
   margin: 5% auto 0 auto;
   text-align: center;
-  border-bottom: 5px solid #95a5a6;
+  border-bottom: 5px solid #21333fda;
 }
 
 footer a {
   text-decoration: none;
-  color: #7f8c8d;
+  color: #21333fda;
 }
 
 .hwt-container {
@@ -414,13 +459,21 @@ footer a {
 }
 
 .hwt-content {
-  min-width: 600px;
+  max-width: 600px;
   width: 100%;
   height: auto;
   padding: 20px;
   border: 1px solid #adb5bd;
   color: inherit;
   font: 18px/25px 'Droid Sans Mono', sans-serif;
+}
+
+@media (max-width: 630px) {
+  .hwt-content {
+    padding: 20px;
+    margin: 0 auto;
+    width: 90%;
+  }
 }
 
 .hwt-input:focus {
